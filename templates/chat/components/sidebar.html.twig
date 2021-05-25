@@ -3,7 +3,7 @@
     <!-- Sidebar - Brand -->
     <a class="sidebar-brand d-flex align-items-center justify-content-center" href="{{ path("chat_index") }}">
         <div class="sidebar-brand-icon rotate-n-15">
-            <i class="fas fa-home"></i>
+            <i class="fas fa-sms"></i>
         </div>
         <div class="sidebar-brand-text mx-3">Uni Chat</div>
     </a>
@@ -12,25 +12,25 @@
     <hr class="sidebar-divider my-0">
 
     <!-- Nav Item - Dashboard -->
-    <li class="nav-item active">
+    <li class="nav-item {% if app.request.get('_route') starts with 'chat_' %}active{% endif %}">
         <a class="nav-link" href="{{ path('chat_index') }}">
-            <i class="fas fa-fw fa-tachometer-alt"></i>
+            <i class="far fa-comments"></i>
             <span>My Rooms</span>
         </a>
     </li>
 
     <!-- Nav Item - Dashboard -->
-    <li class="nav-item active">
-        <a class="nav-link" href="{{ path('new_room') }}">
-            <i class="fas fa-fw fa-tachometer-alt"></i>
+    <li class="nav-item {% if app.request.get('_route') starts with 'all_' %}active{% endif %}">
+        <a class="nav-link" href="{{ path('all_rooms') }}">
+            <i class="far fa-comment-dots"></i>
             <span>All Rooms</span>
         </a>
     </li>
 
     <!-- Nav Item - Dashboard -->
-    <li class="nav-item active">
+    <li class="nav-item {% if app.request.get('_route') starts with 'new_' %}active{% endif %}">
         <a class="nav-link" href="{{ path('new_room') }}">
-            <i class="fas fa-fw fa-tachometer-alt"></i>
+            <i class="fas fa-comment-medical"></i>
             <span>Create Room</span>
         </a>
     </li>

@@ -116,7 +116,7 @@ class Room
     }
 
     /**
-     * @param $roomParticipant
+     * @param RoomParticipant $roomParticipant
      * @return $this
      */
     public function addRoomParticipants($roomParticipant): self
@@ -130,7 +130,7 @@ class Room
     }
 
     /**
-     * @param $roomParticipant
+     * @param RoomParticipant $roomParticipant
      * @return $this
      */
     public function removeRoomParticipants($roomParticipant): self
@@ -161,7 +161,7 @@ class Room
     }
 
     /**
-     * @param $message
+     * @param Message $message
      * @return $this
      */
     public function addMessage($message): self
@@ -175,7 +175,7 @@ class Room
     }
 
     /**
-     * @param $message
+     * @param Room $message
      * @return $this
      */
     public function removeMessage($message): self

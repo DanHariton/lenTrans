@@ -86,17 +86,17 @@ class RoomParticipant
     }
 
     /**
-     * @return Room
+     * @return Room|null
      */
-    public function getRoom(): Room
+    public function getRoom(): ?Room
     {
         return $this->room;
     }
 
     /**
-     * @param Room $room
+     * @param Room|null $room
      */
-    public function setRoom(Room $room): void
+    public function setRoom(?Room $room): void
     {
         $this->room = $room;
     }

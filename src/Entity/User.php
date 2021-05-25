@@ -189,7 +189,7 @@ class User implements UserInterface
     }
 
     /**
-     * @param $roomParticipant
+     * @param RoomParticipant $roomParticipant
      * @return $this
      */
     public function addRoomParticipants($roomParticipant): self
@@ -203,7 +203,7 @@ class User implements UserInterface
     }
 
     /**
-     * @param $roomParticipant
+     * @param RoomParticipant $roomParticipant
      * @return $this
      */
     public function removeRoomParticipants($roomParticipant): self

@@ -4,6 +4,7 @@ namespace App\Repository;
 
 use App\Entity\RoomParticipant;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
+use Doctrine\ORM\NonUniqueResultException;
 use Doctrine\Persistence\ManagerRegistry;
 
 /**
@@ -20,18 +21,34 @@ class RoomParticipantRepository extends ServiceEntityRepository
     }
 
     /**
-     * @param $userId
+     * @param $roomId
      * @return int|mixed|string
      */
-    public function findByUserId($userId)
+    public function findAllByRoomId($roomId)
     {
-        return $this->createQueryBuilder('rp')
-            ->andWhere('rp.user_id = :userId')
-            ->setParameter('userId', $userId)
-            ->leftJoin('rp.room_id', 'room.id')
-            ->orderBy('rp.id', 'DESC')
+        return $this->createQueryBuilder('r')
+            ->andWhere('r.room = :roomId')
+            ->setParameter('roomId', $roomId)
             ->getQuery()
             ->getResult()
+            ;
+    }
+
+    /**
+     * @param $userId
+     * @param $roomId
+     * @return int|mixed|string|null
+     * @throws NonUniqueResultException
+     */
+    public function findOneByUserId($userId, $roomId)
+    {
+        return $this->createQueryBuilder('r')
+            ->andWhere('r.user = :userId')
+            ->andWhere('r.room = :roomId')
+            ->setParameter('userId', $userId)
+            ->setParameter('roomId', $roomId)
+            ->getQuery()
+            ->getOneOrNullResult()
             ;
     }
 
