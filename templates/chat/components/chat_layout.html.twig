@@ -1,0 +1,19 @@
+{% extends 'app_layout.html.twig' %}
+
+{% block body %}
+    <div id="wrapper">
+        {% include 'chat/components/sidebar.html.twig' %}
+
+        <div id="content-wrapper" class="d-flex flex-column">
+            <div id="content">
+                {% include 'chat/components/nav.html.twig' %}
+
+                <div class="container-fluid">
+                    {% block content %}{% endblock %}
+                </div>
+            </div>
+        </div>
+        {% include 'chat/components/logout.html.twig' %}
+    </div>
+{% endblock %}
+

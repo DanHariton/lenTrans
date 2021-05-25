@@ -1,0 +1,23 @@
+{% extends 'chat/components/chat_layout.html.twig' %}
+
+{% block title %}Uni Chat | Create Room{% endblock %}
+
+{% block content %}
+    <h1 class="h3 mb-2 text-gray-800">Create new room</h1>
+
+    <div class="card shadow mb-4">
+        <div class="card-body">
+            {{ form_start(form) }}
+            <div>
+                {{ form_errors(form) }}
+            </div>
+            <div class="input-group mb-3">
+                {{ form_row(form.name) }}
+            </div>
+            <div class="input-group mb-3">
+                {{ form_row(form.status) }}
+            </div>
+            {{ form_end(form) }}
+        </div>
+    </div>
+{% endblock %}

@@ -1,0 +1,93 @@
+{% extends 'app_layout.html.twig' %}
+
+{% block title %}Uni Chat | Home{% endblock %}
+
+{% block body %}
+
+    <header>
+        <nav class="navbar navbar-expand-md navbar-dark fixed-top bg-dark">
+            <div class="container-fluid">
+                <a class="navbar-brand" href="#">Uni Chat</a>
+                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse" aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+                <div class="collapse navbar-collapse" id="navbarCollapse">
+                    <ul class="navbar-nav me-auto mb-2 mb-md-0">
+                        <li class="nav-item">
+                            <a class="nav-link active" aria-current="page" href="{{ path('homepage_index') }}">Home</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="{{ path('security_login') }}">Chat</a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </nav>
+    </header>
+
+    <main>
+
+        <div id="myCarousel" class="carousel slide" data-bs-ride="carousel">
+
+            <div class="carousel-inner">
+                <div class="carousel-item active">
+                    <img src="{{ asset('img/homepage/smarthome.jpg') }}" alt="smarthome">
+                    <div class="container">
+                        <div class="carousel-caption">
+                            <h1>Your home in your pocket</h1>
+                            <p>Be always aware of the events happening at your home</p>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+
+
+        <!-- Marketing messaging and featurettes
+        ================================================== -->
+        <!-- Wrap the rest of the page in another container to center all the content. -->
+
+        <div class="container marketing">
+
+            <!-- Three columns of text below the carousel -->
+            <div class="row">
+                <div class="col-lg text-center">
+                    <img src="{{ asset('img/homepage/ksu.jpg') }}" class="rounded-3 w-50 mb-3" alt="Kseniia Viktorovich">
+                    <h2>Kseniia Viktorovich</h2>
+                    <p>Teamlead</p>
+                </div><!-- /.col-lg-4 -->
+                <div class="col-lg text-center">
+                    <img src="{{ asset('img/homepage/jora.jpg') }}" class="rounded-3 w-50 mb-3" alt="Georgii Meliakin">
+                    <h2>Georgii<br>Meliakin</h2>
+                    <p>Set up the light sensor and the motion sensor for the working area</p>
+                </div><!-- /.col-lg-4 -->
+                <div class="col-lg text-center">
+                    <img src="{{ asset('img/homepage/inna.jpg') }}" class="rounded-3 w-50 mb-3" alt="Inna Rieznik">
+
+                    <h2>Inna <br> Rieznik</h2>
+                    <p>Worked with a temperature sensor. Goal was to ensure that the air conditioner and heater are working in such way that they automatically turn on and off depending on the temperature in the flat</p>
+                </div><!-- /.col-lg-4 -->
+                <div class="col-lg text-center">
+                    <img src="{{ asset('img/homepage/danylo.jpg') }}" class="rounded-3 w-50 mb-3" alt="Danylo Kharytonov">
+
+                    <h2>Danylo Kharytonov</h2>
+                    <p>Created a web application for convenient tracking of events that occur inside the house</p>
+                </div><!-- /.col-lg-4 -->
+            </div><!-- /.row -->
+
+
+            <!-- START THE FEATURETTES -->
+
+            <hr class="featurette-divider">
+
+        </div><!-- /.container -->
+
+
+        <!-- FOOTER -->
+        <footer class="container">
+            <p class="float-end"><a href="#">Back to top</a></p>
+            <p>&copy; 2021 NA`VI Team</p>
+        </footer>
+    </main>
+{% endblock %}

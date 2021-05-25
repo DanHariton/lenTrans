@@ -1,0 +1,10 @@
+{% extends 'chat/components/chat_layout.html.twig' %}
+
+{% block title %}Uni Chat | Rooms{% endblock %}
+
+{% block content %}
+
+    {% for room in user.rooms %}
+        <h1>{{ room.owner.username }}</h1>
+    {% endfor %}
+{% endblock %}

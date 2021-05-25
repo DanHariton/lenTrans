@@ -1,0 +1,37 @@
+{
+  "name": "uni-chat",
+  "version": "1.0.0",
+  "description": "# Installation",
+  "main": "index.js",
+  "directories": {
+    "test": "tests"
+  },
+  "scripts": {
+    "dev": "cross-env NODE_ENV=development node_modules/webpack/bin/webpack.js --progress --hide-modules --config=node_modules/laravel-mix/setup/webpack.config.js",
+    "watch": "cross-env NODE_ENV=development node_modules/webpack/bin/webpack.js --watch --progress --config=node_modules/laravel-mix/setup/webpack.config.js",
+    "prod": "cross-env NODE_ENV=production node_modules/webpack/bin/webpack.js --no-progress --hide-modules --config=node_modules/laravel-mix/setup/webpack.config.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/DanHariton/uniChat.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/DanHariton/uniChat/issues"
+  },
+  "homepage": "https://github.com/DanHariton/uniChat#readme",
+  "devDependencies": {
+    "laravel-mix": "^6.0.13",
+    "postcss": "^8.2.9",
+    "stylus": "^0.54.8",
+    "stylus-loader": "^5.0.0"
+  },
+  "dependencies": {
+    "bootstrap": "^4.6.0",
+    "jquery": "^3.6.0",
+    "jquery-slim": "^3.0.0",
+    "startbootstrap-sb-admin-2": "^4.1.4"
+  }
+}
