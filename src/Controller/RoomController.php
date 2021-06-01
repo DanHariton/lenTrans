@@ -8,6 +8,7 @@ use App\Entity\User;
 use App\Form\RoomCreateType;
 use App\Repository\RoomParticipantRepository;
 use Doctrine\ORM\EntityManagerInterface;
+use Doctrine\ORM\NonUniqueResultException;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
@@ -91,6 +92,78 @@ class RoomController extends AbstractController
     {
         $room->setStatus(!$room->getStatus());
         $em->flush();
+        return $this->redirect($request->headers->get('referer'));
+    }
+
+    /**
+     * @Route("/room/{room}/add-admin/{participant}", name="add_admin")
+     * @param Room $room
+     * @param RoomParticipant $participant
+     * @param EntityManagerInterface $em
+     * @param Request $request
+     * @return RedirectResponse
+     */
+    public function addAdmin(Room $room, RoomParticipant $participant, EntityManagerInterface $em, Request $request)
+    {
+        $room->removeRoomParticipants($participant);
+        $participant->setRole(RoomParticipant::ROLE_ADMIN);
+        $room->addRoomParticipants($participant);
+        $em->persist($participant);
+        $em->flush();
+
+        return $this->redirect($request->headers->get('referer'));
+    }
+
+    /**
+     * @Route("/room/{room}/remove-participant/{participant}", name="remove_participant_room")
+     * @param Room $room
+     * @param RoomParticipant $participant
+     * @param EntityManagerInterface $em
+     * @param Request $request
+     * @return RedirectResponse
+     */
+    public function removeParticipantRoom(Room $room, RoomParticipant $participant,
+                                          EntityManagerInterface $em, Request $request)
+    {
+        $room->removeRoomParticipants($participant);
+        $em->remove($participant);
+        $em->flush();
+
+        return $this->redirect($request->headers->get('referer'));
+    }
+
+    /**
+     * @Route("/room/{room}/make-owner/{participant}", name="make_owner_room")
+     * @param Room $room
+     * @param RoomParticipant $participant
+     * @param RoomParticipantRepository $roomParticipantRepository
+     * @param EntityManagerInterface $em
+     * @param Request $request
+     * @return RedirectResponse
+     * @throws NonUniqueResultException
+     */
+    public function makeOwnerRoom(Room $room, RoomParticipant $participant,
+                                  RoomParticipantRepository $roomParticipantRepository, EntityManagerInterface $em,
+                                  Request $request)
+    {
+        /** @var User $user */
+        $user = $this->getUser();
+        /** @var RoomParticipant $prevOwnerParticipant */
+        $prevOwnerParticipant = $roomParticipantRepository->findOneByUserId($user->getId(), $room->getId());
+
+        // Set new owner of Room
+        $room->setOwner($participant->getUser());
+        $em->persist($room);
+
+        // Set role Admin in room to new owner
+        $participant->setRole(RoomParticipant::ROLE_ADMIN);
+        $em->persist($participant);
+
+        // Set role User for previous owner
+        $prevOwnerParticipant->setRole(RoomParticipant::ROLE_USER);
+        $em->persist($prevOwnerParticipant);
+        $em->flush();
+
         return $this->redirect($request->headers->get('referer'));
     }
 }

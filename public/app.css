@@ -15896,13 +15896,22 @@ body.sidebar-toggled footer.sticky-footer {
 }
 
 .color-primary {
-  color: #0d6efd;
+  color: #0d6efd !important;
 }
 .color-danger {
   color: #dc3545;
 }
 .color-success {
   color: #20c997;
+}
+.color-warning {
+  color: #ffc107;
+}
+.color-purple {
+  color: #6f42c1;
+}
+.color-gray {
+  color: #9b9b9b !important;
 }
 .carousel {
   margin-bottom: 4rem;
@@ -16198,5 +16207,8 @@ textarea {
 }
 .text-info {
   color: #48b0f7 !important;
+}
+.font-35 {
+  font-size: 35px;
 }
 

@@ -19,6 +19,22 @@ class MessageRepository extends ServiceEntityRepository
         parent::__construct($registry, Message::class);
     }
 
+    /**
+     * @param $roomId
+     * @param $time
+     * @return int|mixed|string
+     */
+    public function findByRoomIdAndTime($roomId, $time)
+    {
+        return $this->createQueryBuilder('m')
+            ->andWhere('m.room = :roomId')
+            ->andWhere('m.time >= :time')
+            ->setParameter('roomId', $roomId)
+            ->setParameter('time', $time)
+            ->getQuery()
+            ->getResult();
+    }
+
     // /**
     //  * @return Message[] Returns an array of Message objects
     //  */

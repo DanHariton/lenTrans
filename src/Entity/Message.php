@@ -41,10 +41,6 @@ class Message
      */
     private $content;
 
-    /**
-     * @ORM\Column(type="boolean")
-     */
-    private $readed;
 
     public function getId(): ?int
     {
@@ -103,18 +99,6 @@ class Message
     public function setContent(string $content): self
     {
         $this->content = $content;
-
-        return $this;
-    }
-
-    public function getReaded(): ?bool
-    {
-        return $this->readed;
-    }
-
-    public function setReaded(bool $readed): self
-    {
-        $this->readed = $readed;
 
         return $this;
     }

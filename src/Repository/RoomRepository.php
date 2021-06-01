@@ -21,15 +21,31 @@ class RoomRepository extends ServiceEntityRepository
     }
 
     /**
-     * @param $value
+     * @param $id
      * @return Room|null
      * @throws NonUniqueResultException
      */
-    public function findOneByName($value): ?Room
+    public function findOneById($id): ?Room
     {
         return $this->createQueryBuilder('r')
-            ->andWhere('r.name = :val')
-            ->setParameter('val', $value)
+            ->andWhere('r.id = :id')
+            ->setParameter('id', $id)
+            ->getQuery()
+            ->getOneOrNullResult()
+            ;
+    }
+
+
+    /**
+     * @param $name
+     * @return Room|null
+     * @throws NonUniqueResultException
+     */
+    public function findOneByName($name): ?Room
+    {
+        return $this->createQueryBuilder('r')
+            ->andWhere('r.name = :name')
+            ->setParameter('name', $name)
             ->getQuery()
             ->getOneOrNullResult()
             ;

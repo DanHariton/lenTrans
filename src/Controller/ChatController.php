@@ -58,13 +58,19 @@ class ChatController extends AbstractController
      * @param Room $room
      * @param EntityManagerInterface $em
      * @param RoomParticipantRepository $participantRepository
+     * @param Request $request
      * @return Response
      * @throws NonUniqueResultException
      */
-    public function chatRoom(Room $room, EntityManagerInterface $em, RoomParticipantRepository $participantRepository)
+    public function chatRoom(Room $room, EntityManagerInterface $em, RoomParticipantRepository $participantRepository, Request $request)
     {
         /** @var User $user */
         $user = $this->getUser();
+
+        if ($room->getStatus() == Room::STATUS_PRIVATE && !$participantRepository->findOneByUserId($user->getId(), $room->getId())) {
+            return $this->redirect($request->headers->get('referer'));
+        }
+
         if (!$participantRepository->findOneByUserId($user->getId(), $room->getId())) {
             $participant = new RoomParticipant();
             $participant->setRoom($room);
@@ -75,9 +81,17 @@ class ChatController extends AbstractController
             $room->addRoomParticipants($participant);
         }
 
+        if (!isset($participant)) {
+            /** @var RoomParticipant $participant */
+            $participant = $participantRepository->findOneByUserId($user->getId(), $room->getId());
+        }
+
+        $role = $participant->getRole();
+
         return $this->render('chat/room.html.twig', [
             'room' => $room,
-            'user' => $user
+            'user' => $user,
+            'role' => $role
         ]);
     }
 
