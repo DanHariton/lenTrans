@@ -54,7 +54,7 @@ class ChatController extends AbstractController
     }
 
     /**
-     * @Route("/chat-room/{room}", name="chat_room")
+     * @Route("/chat-room/{room}", name="chat_room", options={"expose"=true})
      * @param Room $room
      * @param EntityManagerInterface $em
      * @param RoomParticipantRepository $participantRepository

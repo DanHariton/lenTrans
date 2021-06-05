@@ -56,11 +56,14 @@
                     <div class="col d-flex align-items-center justify-content-end">
                         {% if room.status != constant("App\\Entity\\Room::STATUS_PRIVATE") or user.id == room.owner.id %}
                             {% if user.id == room.owner.id %}
-                                <a class="btn btn-danger mr-3" href="{{ path('delete_room', {'room': room.id}) }}">Delete Room</a>
+                                <a class="btn btn-danger mr-3"
+                                   onclick="return confirm('You want to delete the chat, are you sure?')"
+                                   href="{{ path('delete_room', {'room': room.id}) }}">Delete Room</a>
                             {% endif %}
                             {% for participant in room.roomParticipants %}
                                 {% if participant.user.id == user.id %}
                                     <a class="btn btn-warning mr-3"
+                                       onclick="return confirm('You want to leave the chat, are you sure?')"
                                        href="{{ path('leave_chat_room', {'room': room.id}) }}">
                                         Leave Room
                                     </a>

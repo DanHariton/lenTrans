@@ -16,7 +16,6 @@ use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
-use Symfony\Component\Serializer\Serializer;
 use Symfony\Component\Validator\ConstraintViolationInterface;
 use Symfony\Component\Validator\Validator\ValidatorInterface;
 
@@ -71,7 +70,7 @@ class MessageRestController extends AbstractController
 
 
     /**
-     * @Route("/rest/get/new-messages", name="get_rest_new_messages", methods={"GET"}, defaults={"_format": "json"})
+     * @Route("/rest/get/new-messages", name="get_rest_new_messages", methods={"GET"}, options={"expose"=true})
      * @param Request $request
      * @param MessageRepository $messageRepository
      * @return Response
@@ -80,13 +79,10 @@ class MessageRestController extends AbstractController
     public function getNewMessages(Request $request, MessageRepository $messageRepository)
     {
         $room = $request->query->get('room');
-        $time = (new DateTime($request->query->get('time')));
+        $time = (new DateTime($request->query->get('time')))->modify('-1 second');
 
-        $messages = $messageRepository->findByRoomIdAndTime($room, $time);
-
-        $response = new Response(json_encode($messages));
-        $response->headers->set('Content-Type', 'application/json');
-
-        return $response;
+        return new JsonResponse(array_map(function (Message $message) {
+            return $message->toArray();
+        }, $messageRepository->findByRoomIdAndTime($room, $time)));
     }
 }

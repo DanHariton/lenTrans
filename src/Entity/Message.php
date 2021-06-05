@@ -3,6 +3,7 @@
 namespace App\Entity;
 
 use App\Repository\MessageRepository;
+use DateTimeInterface;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
@@ -79,27 +80,53 @@ class Message
         $this->room = $room;
     }
 
-    public function getTime(): ?\DateTimeInterface
+    /**
+     * @return DateTimeInterface|null
+     */
+    public function getTime(): ?DateTimeInterface
     {
         return $this->time;
     }
 
-    public function setTime(\DateTimeInterface $time): self
+    /**
+     * @param DateTimeInterface $time
+     * @return $this
+     */
+    public function setTime(DateTimeInterface $time): self
     {
         $this->time = $time;
 
         return $this;
     }
 
+    /**
+     * @return string|null
+     */
     public function getContent(): ?string
     {
         return $this->content;
     }
 
+    /**
+     * @param string $content
+     * @return $this
+     */
     public function setContent(string $content): self
     {
         $this->content = $content;
 
         return $this;
+    }
+
+    public function toArray(): array
+    {
+        return [
+          'id' => $this->getId(),
+          'userId' => $this->getUser()->getId(),
+          'userName' => $this->getUser()->getUsername(),
+          'roomId' => $this->getRoom()->getId(),
+          'time' => $this->getTime()->format('H:i'),
+          'content' => $this->getContent()
+        ];
     }
 }

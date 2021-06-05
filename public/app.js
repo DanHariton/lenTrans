@@ -16,9 +16,11 @@ __webpack_require__(/*! startbootstrap-sb-admin-2/vendor/jquery-easing/jquery.ea
 
 __webpack_require__(/*! startbootstrap-sb-admin-2/js/sb-admin-2 */ "./node_modules/startbootstrap-sb-admin-2/js/sb-admin-2.js");
 
-__webpack_require__(/*! ../_js/message_form */ "./templates/_js/message_form.js");
+if (window.location.pathname.includes(Routing.generate('chat_room'))) {
+  __webpack_require__(/*! ../_js/message_form */ "./templates/_js/message_form.js");
 
-__webpack_require__(/*! ../_js/chat */ "./templates/_js/chat.js");
+  __webpack_require__(/*! ../_js/chat */ "./templates/_js/chat.js");
+}
 
 /***/ }),
 
@@ -31,20 +33,55 @@ __webpack_require__(/*! ../_js/chat */ "./templates/_js/chat.js");
 var messages = document.querySelector('#chat-content');
 var room = document.querySelector('#user-room').value;
 var user = document.querySelector('#room-user').dataset.user;
-setInterval(function () {// axios.get(Routing.generate('get_rest_new_messages'), {
-  //     params: {
-  //         room: room,
-  //         time: new Date(),
-  //     }
-  // })
-  //     .then(function (response) {
-  //        console.log(response)
-  //     });
-  //alert(new Date());
-  // let templateNode = document.querySelector('#message-template').cloneNode(true);
-  // templateNode.querySelector('h1').innerText = data.message;
-  // templateNode.style.display = 'block';
-  // messages.appendChild(templateNode);
+var items = document.querySelectorAll(".media-chat");
+var last = items[items.length - 1];
+last.scrollIntoView();
+var newMessages = [];
+setInterval(function () {
+  axios.get(Routing.generate('get_rest_new_messages'), {
+    params: {
+      room: room,
+      time: new Date()
+    }
+  }).then(function (response) {
+    newMessages = [];
+
+    if (response.data.length > 0) {
+      for (var i = 0; i < response.data.length; i++) {
+        newMessages.push(JSON.parse(JSON.stringify(response.data[i])));
+      }
+    }
+  });
+
+  if (newMessages.length > 0) {
+    var templateMessageNode = document.querySelector('#chat-template-message').cloneNode(true);
+    var templateMessageOwnerNode = document.querySelector('#chat-template-owner').cloneNode(true);
+
+    for (var n = 0; n < newMessages.length; n++) {
+      var message = document.getElementById(newMessages[n].id);
+
+      if (message === null) {
+        if (parseInt(newMessages[n].userId) === parseInt(user)) {
+          templateMessageOwnerNode.id = newMessages[n].id;
+          templateMessageOwnerNode.querySelector('p:first-child').innerText = newMessages[n].content;
+          templateMessageOwnerNode.querySelector('p:last-child').innerText = newMessages[n].time;
+          templateMessageOwnerNode.classList.remove('d-none');
+          messages.appendChild(templateMessageOwnerNode);
+        } else {
+          templateMessageNode.id = newMessages[n].id;
+          templateMessageNode.querySelector('p:first-child').innerText = newMessages[n].userName;
+          templateMessageNode.querySelector('p:nth-child(2)').innerText = newMessages[n].content;
+          templateMessageNode.querySelector('p:last-child').innerText = newMessages[n].time;
+          templateMessageNode.classList.remove('d-none');
+          messages.appendChild(templateMessageNode);
+        }
+      }
+    }
+
+    var updateItems = document.querySelectorAll(".media-chat");
+    var lastMessage = updateItems[updateItems.length - 1];
+    lastMessage.scrollIntoView();
+  }
 }, 1000);
 
 /***/ }),
@@ -56,6 +93,7 @@ setInterval(function () {// axios.get(Routing.generate('get_rest_new_messages'),
 /***/ (() => {
 
 var form = document.getElementById('send-message');
+var message = document.querySelector('#user-message');
 
 form.onsubmit = function (event) {
   event.preventDefault();
@@ -66,6 +104,8 @@ form.onsubmit = function (event) {
       message: document.getElementById('user-message').value,
       room: document.getElementById('user-room').value
     }
+  }).then(function (response) {
+    message.value = '';
   });
 };
 

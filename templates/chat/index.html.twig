@@ -47,9 +47,12 @@
                     </div>
                     <div class="col d-flex align-items-center justify-content-end">
                         {% if user.id == room.owner.id %}
-                            <a class="btn btn-danger mr-3" href="{{ path('delete_room', {'room': room.id}) }}">Delete Room</a>
+                            <a class="btn btn-danger mr-3"
+                               onclick="return confirm('You want to delete the chat, are you sure?')"
+                               href="{{ path('delete_room', {'room': room.id}) }}">Delete Room</a>
                         {% endif %}
                         <a class="btn btn-warning mr-3"
+                           onclick="return confirm('You want to leave the chat, are you sure?')"
                            href="{{ path('leave_chat_room', {'room': room.id}) }}">
                             Leave Room
                         </a>

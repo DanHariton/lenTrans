@@ -1,4 +1,5 @@
 let form = document.getElementById('send-message');
+let message = document.querySelector('#user-message');
 
 form.onsubmit = function (event) {
     event.preventDefault();
@@ -10,4 +11,7 @@ form.onsubmit = function (event) {
             room: document.getElementById('user-room').value
         }
     })
+        .then(function (response) {
+            message.value = '';
+        });
 }
