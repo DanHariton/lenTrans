@@ -104,7 +104,7 @@ form.onsubmit = function (event) {
       message: document.getElementById('user-message').value,
       room: document.getElementById('user-room').value
     }
-  }).then(function (response) {
+  }).then(function () {
     message.value = '';
   });
 };

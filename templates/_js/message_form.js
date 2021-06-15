@@ -11,7 +11,7 @@ form.onsubmit = function (event) {
             room: document.getElementById('user-room').value
         }
     })
-        .then(function (response) {
+        .then(function () {
             message.value = '';
         });
 }

@@ -35,6 +35,22 @@ class MessageRepository extends ServiceEntityRepository
             ->getResult();
     }
 
+    /**
+     * @param $roomId
+     * @param $userId
+     * @return int|mixed|string
+     */
+    public function findByRoomIdAndUserId($roomId, $userId)
+    {
+        return $this->createQueryBuilder('m')
+            ->andWhere('m.user = :userId')
+            ->andWhere('m.room = :roomId')
+            ->setParameter('userId', $userId)
+            ->setParameter('roomId', $roomId)
+            ->getQuery()
+            ->getResult();
+    }
+
     // /**
     //  * @return Message[] Returns an array of Message objects
     //  */
