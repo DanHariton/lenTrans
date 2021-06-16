@@ -38,16 +38,6 @@ class User implements UserInterface
     private $password;
 
     /**
-     * @ORM\Column(type="boolean")
-     */
-    private $status;
-
-    /**
-     * @ORM\Column(type="datetime")
-     */
-    private $lastOnline;
-
-    /**
      * @var RoomParticipant[]|ArrayCollection
      * Many Users have Many Groups.
      * @ORM\OneToMany(targetEntity="RoomParticipant", mappedBy="user")
@@ -146,30 +136,6 @@ class User implements UserInterface
     {
         // If you store any temporary, sensitive data on the user, clear it here
         // $this->plainPassword = null;
-    }
-
-    public function getStatus(): ?bool
-    {
-        return $this->status;
-    }
-
-    public function setStatus(bool $status): self
-    {
-        $this->status = $status;
-
-        return $this;
-    }
-
-    public function getLastOnline(): ?DateTimeInterface
-    {
-        return $this->lastOnline;
-    }
-
-    public function setLastOnline(DateTimeInterface $lastOnline): self
-    {
-        $this->lastOnline = $lastOnline;
-
-        return $this;
     }
 
     /**
